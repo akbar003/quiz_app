@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:quiz_app/components/QuestionData.dart';
+import 'package:quiz_app/components/question.dart';
 
 class QuizzApp extends StatefulWidget {
   const QuizzApp({super.key});
@@ -10,16 +12,9 @@ class QuizzApp extends StatefulWidget {
 }
 
 class _QuizzAppState extends State<QuizzApp> {
-  List<bool> answers = [false, false, true, false, false, false];
+  // List<bool> answers = [false, false, true, false, false, false];
   List<Icon> scoreKeeper = [];
-  List<String> questions = [
-    'The sun is a planet.',
-    'Nawas Sharif is a loyal person',
-    'Water boils at 100°C at sea level.',
-    'The Great Wall of China is visible from space with the naked eye.',
-    'Oxygen is the most abundant element in Earth\s atmosphere.',
-    "pakistran is a very rich country",
-  ];
+  QuestionData questionData = QuestionData();
   int questionNumber = 0;
   @override
   Widget build(BuildContext context) {
@@ -36,7 +31,7 @@ class _QuizzAppState extends State<QuizzApp> {
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
-                    questions[questionNumber],
+                    questionData.questionBank[questionNumber].questionText,
                     style: TextStyle(color: Colors.white, fontSize: 24),
                     textAlign: TextAlign.center,
                   ),
@@ -56,7 +51,7 @@ class _QuizzAppState extends State<QuizzApp> {
                   ),
                   fillColor: Colors.green,
                   onPressed: () {
-                    bool correctAnswer = answers[questionNumber];
+                    bool correctAnswer =  questionData.questionBank[questionNumber].answerText;
                     if (correctAnswer == true) {
                       scoreKeeper.add(Icon(
                         Icons.check,
@@ -90,7 +85,7 @@ class _QuizzAppState extends State<QuizzApp> {
                   ),
                   fillColor: Colors.red,
                   onPressed: () {
-                    bool correctAnswer = answers[questionNumber];
+                    bool correctAnswer = questionData.questionBank[questionNumber].answerText;
                     if (correctAnswer == false) {
                       scoreKeeper.add(Icon(
                         Icons.check,
@@ -103,9 +98,9 @@ class _QuizzAppState extends State<QuizzApp> {
                       ));
                     }
                     setState(() {
-                      if (questionNumber < questions.length - 1) {
+
                         questionNumber++;
-                      }
+
                     });
                   },
                 ),
@@ -123,7 +118,7 @@ class _QuizzAppState extends State<QuizzApp> {
                 // ],
               ),
             ),
-            if (questionNumber == questions.length - 1)
+            if (questionNumber > 5)
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
